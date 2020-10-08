@@ -1,0 +1,241 @@
+name: "Smoke"
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 200
+input_dim: 356
+layer {
+  name: "N1"
+  type: "LRN"
+  bottom: "data"
+  top: "N1"
+  lrn_param {
+    norm_region: WITHIN_CHANNEL
+    local_size: 5
+    alpha: 1
+    beta: 0.5
+  }
+}
+layer {
+  name: "C1"
+  type: "Convolution"
+  bottom: "N1"
+  top: "C1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    kernel_size: 5
+    stride: 1
+    pad: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "R1"
+  type: "ReLU"
+  bottom: "C1"
+  top: "R1"
+}
+layer {
+  name: "P1"
+  type: "Pooling"
+  bottom: "R1"
+  top: "P1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "C2"
+  type: "Convolution"
+  bottom: "P1"
+  top: "C2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    kernel_size: 5
+    stride: 1
+    pad: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    } 
+    bias_filler {
+      type: "constant"
+      value: 0
+    } 
+  } 
+} 
+layer { 
+  name: "R2"
+  type: "ReLU"
+  bottom: "C2"
+  top: "R2"
+}
+layer { 
+  name: "P2"
+  type: "Pooling"
+  bottom: "R2"
+  top: "P2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer { 
+  name: "C3"
+  type: "Convolution"
+  bottom: "P2"
+  top: "C3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    kernel_size: 5
+    stride: 1
+    pad: 2
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    } 
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "R3"
+  type: "ReLU"
+  bottom: "C3"
+  top: "R3"
+}
+layer {
+  name: "C4"
+  type: "Convolution"
+  bottom: "R3"
+  top: "C4"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    kernel_size: 16
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    } 
+    bias_filler {
+      type: "constant"
+      value: 0
+    } 
+  } 
+}
+layer {
+  name: "R4"
+  type: "ReLU"
+  bottom: "C4"
+  top: "R4"
+}
+layer { 
+  name: "C5"
+  type: "Convolution"
+  bottom: "R4"
+  top: "C5"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    } 
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer { 
+  name: "R5"
+  type: "ReLU"
+  bottom: "C5"
+  top: "R5"
+}
+layer {
+  name: "C6"
+  type: "Convolution"
+  bottom: "R5"
+  top: "C6"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  } 
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  } 
+  convolution_param {
+    num_output: 1 
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    } 
+    bias_filler {
+      type: "constant"
+      value: 0
+    } 
+  } 
+}
+layer {
+  name: "flatten"
+  type: "Flatten"
+  bottom: "C6"
+  top: "map_vec"
+}

@@ -1,0 +1,5 @@
+batchTrainingData
+batchTrainingFeature
+trainSmokeClassifier
+batchSmokeClassification
+exit

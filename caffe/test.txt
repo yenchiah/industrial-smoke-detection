@@ -1,0 +1,2 @@
+/home/yenchiah/caffe/smoke-detection-caffe/caffe/2015-05-02.timemachine.crf26-12fps-1424x800.1.2.2.mp4.negative.h5
+/home/yenchiah/caffe/smoke-detection-caffe/caffe/2015-05-02.timemachine.crf26-12fps-1424x800.1.2.2.mp4.positive.h5
